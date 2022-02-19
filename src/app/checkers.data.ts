@@ -66,8 +66,10 @@ export interface GameStateInterface {
  * |·B·B·B·B·B|
  * |B·B·B·B·B·|
  * |·B·B·B·B·B|
- * |..........|
- * |..........|
+ * |B·B·B·B·B·|
+ * |··········|
+ * |··········|
+ * |W·W·W·W·W·|
  * |·W·W·W·W·W|
  * |W·W·W·W·W·|
  * |·W·W·W·W·W|
@@ -86,7 +88,7 @@ export function getInitialGameState(): GameState {
             return 'White'
           }
         } else if (rowIndex % 2 == 0 && columnIndex % 2 == 1) {
-          if (rowIndex < 3) {
+          if (rowIndex < 4) {
             return 'Black'
           } else if (rowIndex > 5) {
             return 'White'
@@ -97,4 +99,42 @@ export function getInitialGameState(): GameState {
     }) as Board,
     turn: 'White'
   };
+}
+
+
+/**
+ * This function generate board from a string
+ * The string must be a 10x10 array of cells
+ * with the following characters :
+ * - Black : B
+ * - White : W
+ * - Black King : N
+ * - White King : X
+ * - Empty : '·'
+ */
+export function getBoardFromString(boardString: string): Board | {error: 'Too many character' | 'Unknown character' } {
+  if (boardString.replace(/\s|\n/g,'').length != 100) {
+    return {error: 'Too many character' };
+  }
+  if(boardString.replace(/\s|\n|·|B|N|W|X/g,'').length!=0){
+    return {error:'Unknown character'};
+  }
+  return boardString.trim().split('\n').map((row, rowIndex) => {
+    return row.trim().split('').map((cell, columnIndex) => {
+      switch (cell) {
+        case '·':
+          return 'Empty';
+        case 'B':
+          return 'Black';
+        case 'W':
+          return 'White';
+        case 'N':
+          return 'BlackKing';
+        case 'X':
+          return 'WhiteKing';
+        default:
+          return 'Empty';
+      }
+    })
+  }) as Board;
 }
