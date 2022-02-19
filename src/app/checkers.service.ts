@@ -5,10 +5,12 @@ import {
   GameStateInterface,
   PlayReturns,
   TileCoords,
-  TileCoordsList,
   Turn,
   getInitialGameState,
-  Win, WhereCanPlayReturns, Board, InitializeReturns
+  Win,
+  WhereCanPlayReturns,
+  Board,
+  InitializeReturns
 } from "./checkers.data";
 import {BehaviorSubject, Observable} from "rxjs";
 
@@ -37,18 +39,16 @@ export class CheckersService implements GameStateInterface{
   }
 
   /**
-   * Check if the game is over and return the winner
-   * @return 'Black' | 'White' | 'Equality' | null
-   * - it will return Black if there is White pieces on the board
-   * - it will return White if there is Black pieces on the board
-   * - it will return Equality if the number of kings is equal to 3 (Regardless of the color)
-   * - it will return Equality if the number of kings is equal to 2 and one discs (Regardless of the color)
-   * - it will return Equality if the number of kings is equal to 1 and two discs (Regardless of the color)
-   * - it will return null if none of the previous conditions are met
+   * This function will return the list of possible moves for the piece corresponding
+   * to the given coordinates (note:the list could be empty)
+   * If they can't return the list it will return one of the following errors:
+   * - {error:'out of range'} if coords aren't positive integers or are out of the board
+   * - {error:'no piece'} if there is no piece on the given from coordinates
+   * @param from
    */
-  winner(): Win{
-    return null;
-  };
+  whereCanPlay(from: TileCoords): WhereCanPlayReturns {
+    return [];
+  }
 
   /**
    * This function will play a move on the board
@@ -68,16 +68,18 @@ export class CheckersService implements GameStateInterface{
   }
 
   /**
-   * This function will return the list of possible moves for the piece corresponding
-   * to the given coordinates (note:the list could be empty)
-   * If they can't return the list it will return one of the following errors:
-   * - {error:'out of range'} if coords aren't positive integers or are out of the board
-   * - {error:'no piece'} if there is no piece on the given from coordinates
-   * @param from
+   * Check if the game is over and return the winner
+   * @return 'Black' | 'White' | 'Equality' | null
+   * - it will return Black if there is White pieces on the board
+   * - it will return White if there is Black pieces on the board
+   * - it will return Equality if the number of kings is equal to 3 (Regardless of the color)
+   * - it will return Equality if the number of kings is equal to 2 and one discs (Regardless of the color)
+   * - it will return Equality if the number of kings is equal to 1 and two discs (Regardless of the color)
+   * - it will return null if none of the previous conditions are met
    */
-  whereCanPlay(from: TileCoords): WhereCanPlayReturns {
-    return [];
-  }
+  winner(): Win{
+    return null;
+  };
 
       //--------------------------//
     // Getter Setters and utils //
