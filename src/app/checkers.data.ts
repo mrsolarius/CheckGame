@@ -10,45 +10,50 @@ export type Cell = 'Empty' | Pieces;
 export type Win = null | Turn | 'Equality'
 
 //Row of the board
-export type Row = [Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell,Cell,Cell];
+export type Row = [Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell];
 //The board
-export type Board = [Row, Row, Row, Row, Row, Row, Row, Row,Row,Row];
+export type Board = [Row, Row, Row, Row, Row, Row, Row, Row, Row, Row];
 
 //Immutable board row
-export type Row_RO = readonly [Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell,Cell,Cell];
+export type Row_RO = readonly [Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell];
 //Immutable board
-export type Board_RO = readonly [Row_RO, Row_RO, Row_RO, Row_RO, Row_RO, Row_RO, Row_RO, Row_RO,Row_RO,Row_RO];
+export type Board_RO = readonly [Row_RO, Row_RO, Row_RO, Row_RO, Row_RO, Row_RO, Row_RO, Row_RO, Row_RO, Row_RO];
 
 //One coordinate of the board
-export type TileCoords = readonly [x:number, y:number];
+export type TileCoords = readonly [x: number, y: number];
 //Coordinates List
 export type TileCoordsList = readonly TileCoords[];
 
 //The game state
 export interface GameState {
-    //State of the board
-    board: Board_RO;
-    //Player turn
-    turn: Turn;
+  //State of the board
+  board: Board_RO;
+  //Player turn
+  turn: Turn;
 }
 
-export type PlayReturns = null | {error:'out of range' | 'no piece' | 'not your turn' | 'can not move there' };
-export type WhereCanPlayReturns = TileCoordsList | {error: 'out of range' | 'no piece' };
+export type PlayReturns = null | { error: 'out of range' | 'no piece' | 'not your turn' | 'can not move there' };
+export type WhereCanPlayReturns = TileCoordsList | { error: 'out of range' | 'no piece' };
+export type InitializeReturns = null | { error: 'Too many pieces' | 'Invalid pieces placement' };
 
 //The game state for MVP/MVC
 export interface GameStateInterface {
-    //State of the board
-    readonly board: Board_RO;
-    //Player turn
-    readonly turn: Turn;
-    //Who is the winner
-    winner(): Win;
-    //Where the player can play
-    whereCanPlay(from:TileCoords):WhereCanPlayReturns;
-    //Play a move
-    playMove(from:TileCoords, to:TileCoords):PlayReturns;
-    //Observable of the game state
-    gameStateObjs:Observable<GameState>;
+  //State of the board
+  readonly board: Board_RO;
+  //Player turn
+  readonly turn: Turn;
+  //Init board
+  initialize(board: Board, turn:Turn): InitializeReturns;
+  //Next turn
+  nextTurn(): void;
+  //Who is the winner
+  winner(): Win;
+  //Where the player can play
+  whereCanPlay(from: TileCoords): WhereCanPlayReturns;
+  //Play a move
+  playMove(from: TileCoords, to: TileCoords): PlayReturns;
+  //Observable of the game state
+  gameStateObjs: Observable<GameState>;
 }
 
 /**
@@ -70,26 +75,26 @@ export interface GameStateInterface {
  *```
  * @return GameState
  */
-export function getInitialGameState():GameState{
+export function getInitialGameState(): GameState {
   return {
-    board:new Array(10).fill(0).map((_,rowIndex)=>{
-      return new Array(10).fill('Empty').map((_,columnIndex)=>{
-        if(rowIndex%2==1 && columnIndex%2==0){
-          if(rowIndex<4){
+    board: new Array(10).fill(0).map((_, rowIndex) => {
+      return new Array(10).fill('Empty').map((_, columnIndex) => {
+        if (rowIndex % 2 == 1 && columnIndex % 2 == 0) {
+          if (rowIndex < 4) {
             return 'Black'
-          }else if (rowIndex>5){
+          } else if (rowIndex > 5) {
             return 'White'
           }
-        }else if(rowIndex%2==0 && columnIndex%2==1){
-          if(rowIndex<3){
+        } else if (rowIndex % 2 == 0 && columnIndex % 2 == 1) {
+          if (rowIndex < 3) {
             return 'Black'
-          }else if (rowIndex>5){
+          } else if (rowIndex > 5) {
             return 'White'
           }
         }
         return 'Empty'
       })
     }) as Board,
-    turn:'White'
+    turn: 'White'
   };
 }
