@@ -3,9 +3,11 @@ import {Observable} from "rxjs";
 
 export type Turn = 'White' | 'Black';
 //Different types of discs
-export type Discs = Turn | 'BlackKing' | 'WhiteKing';
+export type Pieces = Turn | 'BlackKing' | 'WhiteKing';
 //The content of a cell
-export type Cell = 'Empty' | Discs;
+export type Cell = 'Empty' | Pieces;
+//Winning possibilities
+export type Win = null | Turn | 'Equality'
 
 //Row of the board
 export type Row = [Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell,Cell,Cell];
@@ -30,7 +32,8 @@ export interface GameState {
     turn: Turn;
 }
 
-export type playReturns = null | {error:'out of range' | 'not your turn' | 'can not move there'};
+export type PlayReturns = null | {error:'out of range' | 'no piece' | 'not your turn' | 'can not move there' };
+export type WhereCanPlayReturns = TileCoordsList | {error: 'out of range' | 'no piece' };
 
 //The game state for MVP/MVC
 export interface GameStateInterface {
@@ -39,11 +42,11 @@ export interface GameStateInterface {
     //Player turn
     readonly turn: Turn;
     //Who is the winner
-    readonly winner: null | Turn;
+    winner(): Win;
     //Where the player can play
-    whereCanPlay(from:TileCoords):TileCoordsList;
+    whereCanPlay(from:TileCoords):WhereCanPlayReturns;
     //Play a move
-    playMove(from:TileCoords, to:TileCoords):playReturns;
+    playMove(from:TileCoords, to:TileCoords):PlayReturns;
     //Observable of the game state
     gameStateObjs:Observable<GameState>;
 }
