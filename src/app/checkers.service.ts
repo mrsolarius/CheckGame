@@ -8,7 +8,7 @@ import {
   TileCoordsList,
   Turn,
   getInitialGameState,
-  Win, WhereCanPlayReturns
+  Win, WhereCanPlayReturns, Board, InitializeReturns
 } from "./checkers.data";
 import {BehaviorSubject, Observable} from "rxjs";
 
@@ -16,14 +16,25 @@ import {BehaviorSubject, Observable} from "rxjs";
   providedIn: 'root'
 })
 export class CheckersService implements GameStateInterface{
-
-  constructor() {
-    this.gameStateSubject.next(getInitialGameState());
-  }
-
   protected gameStateSubject = new BehaviorSubject<GameState>(getInitialGameState());
   gameStateObjs: Observable<GameState> = this.gameStateSubject.asObservable();
 
+  /**
+   * Initialize the game state
+   * It could return following errors:
+   * - {error:'Too many pieces'} if there are more than 20 white pieces or black pieces
+   * - {error:'Invalid pieces placement'} if one or more pieces are not placed diagonally (from the left corner)
+   * If the game state is initialized successfully, it will return null;
+   * @param board the board to initialize
+   * @param turn the turn to initialize
+   */
+  initialize(board: Board, turn:Turn): InitializeReturns {
+    this.gameStateSubject.next({
+      board: board,
+      turn: turn,
+    });
+    return null;
+  }
   /**
    * Get the current turn
    * @returns Turn
@@ -33,11 +44,27 @@ export class CheckersService implements GameStateInterface{
   }
 
   /**
+   * Will update the game state with the next turn
+   */
+  nextTurn(): void {
+    const turn = this.turn === 'White' ? 'Black' : 'White';
+    this.gameStateSubject.next({...this.gameStateSubject.value, turn});
+  }
+
+  /**
    * Get the current state of board
    * @returns Board_RO
    */
   get board(): Board_RO {
     return this.gameStateSubject.value.board;
+  }
+
+  /**
+   * Set board to a new board
+   * @param board
+   */
+  set board(board: Board_RO) {
+    this.gameStateSubject.next({...this.gameStateSubject.value, board});
   }
 
   /**
