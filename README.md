@@ -1,2 +1,2 @@
-# CheckGame
+# CheckersGame
 Checker Game Made With Angular
