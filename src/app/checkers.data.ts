@@ -90,20 +90,3 @@ export function getInitialGameState():GameState{
     turn:'White'
   };
 }
-
-export function cellToString(Cell:Cell):string{
-  switch(Cell){
-    case 'Empty':
-      return '·';
-    case 'Black':
-      return 'B';
-    case 'BlackKing':
-      return 'BK';
-    case 'White':
-      return 'W';
-    case 'WhiteKing':
-      return 'WK';
-    default:
-      return '?';
-  }
-}
