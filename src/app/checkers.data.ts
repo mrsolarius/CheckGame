@@ -71,17 +71,17 @@ export function getInitialGameState():GameState{
   return {
     board:new Array(10).fill(0).map((_,rowIndex)=>{
       return new Array(10).fill('Empty').map((_,columnIndex)=>{
-        if(rowIndex%2==1 && columnIndex%2==1){
-          if(rowIndex<3){
-            return 'White'
-          }else if (rowIndex>4){
+        if(rowIndex%2==1 && columnIndex%2==0){
+          if(rowIndex<4){
             return 'Black'
+          }else if (rowIndex>5){
+            return 'White'
           }
-        }else if(rowIndex%2==0 && columnIndex%2==0){
+        }else if(rowIndex%2==0 && columnIndex%2==1){
           if(rowIndex<3){
-            return 'White'
-          }else if (rowIndex>4){
             return 'Black'
+          }else if (rowIndex>5){
+            return 'White'
           }
         }
         return 'Empty'
@@ -89,4 +89,21 @@ export function getInitialGameState():GameState{
     }) as Board,
     turn:'White'
   };
+}
+
+export function cellToString(Cell:Cell):string{
+  switch(Cell){
+    case 'Empty':
+      return '·';
+    case 'Black':
+      return 'B';
+    case 'BlackKing':
+      return 'BK';
+    case 'White':
+      return 'W';
+    case 'WhiteKing':
+      return 'WK';
+    default:
+      return '?';
+  }
 }
