@@ -26,6 +26,7 @@ export class CheckersService implements GameStateInterface{
    * It could return following errors:
    * - {error:'Too many pieces'} if there are more than 20 white pieces or black pieces
    * - {error:'Invalid pieces placement'} if one or more pieces are not placed diagonally (from the left corner)
+   * - {error:'Some pieces should be king'} if one or more pieces are place at the opposite edge of his camp because they should be king
    * If the game state is initialized successfully, it will return null;
    * @param board the board to initialize
    * @param turn the turn to initialize

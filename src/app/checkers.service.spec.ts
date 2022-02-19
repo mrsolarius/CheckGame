@@ -13,6 +13,7 @@ describe('CheckersService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
   /**
    * Test of initialize(board: Board, turn:Turn): InitializeReturns
    */
@@ -22,6 +23,9 @@ describe('CheckersService', () => {
 
       });
       describe('Invalid pieces placement',()=>{
+
+      });
+      describe('Some pieces should be king',()=>{
 
       });
     });

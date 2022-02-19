@@ -34,7 +34,7 @@ export interface GameState {
 
 export type PlayReturns = null | { error: 'out of range' | 'no piece' | 'not your turn' | 'can not move there' };
 export type WhereCanPlayReturns = TileCoordsList | { error: 'out of range' | 'no piece' };
-export type InitializeReturns = null | { error: 'Too many pieces' | 'Invalid pieces placement' };
+export type InitializeReturns = null | { error: 'Too many pieces' | 'Invalid pieces placement' | 'Some pieces should be king'};
 
 //The game state for MVP/MVC
 export interface GameStateInterface {
