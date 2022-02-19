@@ -35,37 +35,6 @@ export class CheckersService implements GameStateInterface{
     });
     return null;
   }
-  /**
-   * Get the current turn
-   * @returns Turn
-   */
-  get turn(): Turn {
-    return this.gameStateSubject.value.turn;
-  }
-
-  /**
-   * Will update the game state with the next turn
-   */
-  nextTurn(): void {
-    const turn = this.turn === 'White' ? 'Black' : 'White';
-    this.gameStateSubject.next({...this.gameStateSubject.value, turn});
-  }
-
-  /**
-   * Get the current state of board
-   * @returns Board_RO
-   */
-  get board(): Board_RO {
-    return this.gameStateSubject.value.board;
-  }
-
-  /**
-   * Set board to a new board
-   * @param board
-   */
-  set board(board: Board_RO) {
-    this.gameStateSubject.next({...this.gameStateSubject.value, board});
-  }
 
   /**
    * Check if the game is over and return the winner
@@ -108,5 +77,41 @@ export class CheckersService implements GameStateInterface{
    */
   whereCanPlay(from: TileCoords): WhereCanPlayReturns {
     return [];
+  }
+
+      //--------------------------//
+    // Getter Setters and utils //
+  //--------------------------//
+
+  /**
+   * Get the current state of board
+   * @returns Board_RO
+   */
+  get board(): Board_RO {
+    return this.gameStateSubject.value.board;
+  }
+
+  /**
+   * Set board to a new board
+   * @param board
+   */
+  set board(board: Board_RO) {
+    this.gameStateSubject.next({...this.gameStateSubject.value, board});
+  }
+
+  /**
+   * Get the current turn
+   * @returns Turn
+   */
+  get turn(): Turn {
+    return this.gameStateSubject.value.turn;
+  }
+
+  /**
+   * Will update the game state with the next turn
+   */
+  nextTurn(): void {
+    const turn = this.turn === 'White' ? 'Black' : 'White';
+    this.gameStateSubject.next({...this.gameStateSubject.value, turn});
   }
 }
