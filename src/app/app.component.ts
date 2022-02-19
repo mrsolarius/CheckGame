@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {CheckersService} from "./checkers.service";
-import {Cell, cellToString} from "./checkers.data";
+import {Cell} from "./checkers.data";
 
 @Component({
   selector: 'app-root',
