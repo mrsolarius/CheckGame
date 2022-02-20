@@ -1,0 +1,20 @@
+.tableButton{
+  height: 30px;
+  width: 30px;
+  background-color: #FFDE03;
+  border: 0;
+  border-radius: 10px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.tableButton:hover{
+  background-color: #0336FF;
+  color: white;
+}
+
+.tableButton:disabled{
+  background-color: #FFFDE7;
+}
+
+
+
