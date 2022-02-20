@@ -138,3 +138,11 @@ export function getBoardFromString(boardString: string): Board | {error: 'Too ma
     })
   }) as Board;
 }
+
+export function countSelectedCells(board:Board,...cells:Cell[]): number {
+  return board.reduce((acc, currentValue) => {
+    return acc + currentValue.filter(
+      cell => cells.filter(
+        searchValue => searchValue === cell).length > 0).length;
+  }, 0);
+}
