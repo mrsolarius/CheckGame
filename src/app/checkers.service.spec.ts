@@ -289,10 +289,10 @@ describe('CheckersService', () => {
                                         B·N···B·B·
                                         ·B···W····
                                         ··········
-                                        ····W·····
-                                        ·····W···W
-                                        W·····W···
-                                        ·······W··`);
+                                        ·····W····
+                                        ······W··W
+                                        ·W·····W··
+                                        ········W·`);
         const init = service.initialize(<Board>board, 'Black');
         expect(init).toBe(null);
         expect(service.board).toEqual(<Board_RO>board);
