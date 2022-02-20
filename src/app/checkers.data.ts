@@ -34,7 +34,7 @@ export interface GameState {
 
 export type PlayReturns = null | { error: 'out of range' | 'no piece' | 'not your turn' | 'can not move there' };
 export type WhereCanPlayReturns = TileCoordsList | { error: 'out of range' | 'no piece' };
-export type InitializeReturns = null | { error: 'Too many pieces' | 'Invalid pieces placement' | 'Some pieces should be king'};
+export type InitializeReturns = null | { error: 'Too many pieces' | 'Invalid pieces placement' | 'Some pieces should be king' | 'Must contain at least one piece'};
 
 //The game state for MVP/MVC
 export interface GameStateInterface {
@@ -119,8 +119,8 @@ export function getBoardFromString(boardString: string): Board | {error: 'Too ma
   if(boardString.replace(/\s|\n|·|B|N|W|X/g,'').length!=0){
     return {error:'Unknown character'};
   }
-  return boardString.trim().split('\n').map((row, rowIndex) => {
-    return row.trim().split('').map((cell, columnIndex) => {
+  return boardString.trim().split('\n').map((row) => {
+    return row.trim().split('').map((cell) => {
       switch (cell) {
         case '·':
           return 'Empty';
