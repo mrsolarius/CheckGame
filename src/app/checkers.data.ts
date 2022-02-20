@@ -139,9 +139,18 @@ export function getBoardFromString(boardString: string): Board | {error: 'Too ma
   }) as Board;
 }
 
+/**
+ * This function return the number of selected cells
+ * inside the board
+ * @param board
+ * @param cells
+ */
 export function countSelectedCells(board:Board,...cells:Cell[]): number {
+  //Reduce with accumulator set to 0 to be increment
   return board.reduce((acc, currentValue) => {
+    //Filter of row by the cell inside cells array to get the number of current cells
     return acc + currentValue.filter(
+      //Filter of the cell by the cell inside cells array to get the number of current cells
       cell => cells.filter(searchValue => searchValue === cell).length
     ).length;
   }, 0);
