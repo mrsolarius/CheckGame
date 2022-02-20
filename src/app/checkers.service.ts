@@ -10,7 +10,7 @@ import {
   Win,
   WhereCanPlayReturns,
   Board,
-  InitializeReturns
+  InitializeReturns, countSelectedCells
 } from "./checkers.data";
 import {BehaviorSubject, Observable} from "rxjs";
 
@@ -33,10 +33,27 @@ export class CheckersService implements GameStateInterface{
    * @param turn the turn to initialize
    */
   initialize(board: Board, turn:Turn): InitializeReturns {
+    if(countSelectedCells(board,'Empty')===100)return {error:'Must contain at least one piece'};
+    if(countSelectedCells(board,'BlackKing','Black')>20 || countSelectedCells(board,'WhiteKing','White')>20)return {error:'Too many pieces'};
+    const invalidPlacementCount = board.reduce((acc,row,rowIndex)=>{
+      return acc + row.reduce((acc,cell,columnIndex)=> {
+        // if the cell coordinates, are both even or both, it means that the cell must be empty
+        // So if it's not the case, it's an invalid placement, and we increment the invalid placement count
+        if ((rowIndex % 2 == 0 && columnIndex % 2 == 0)||(rowIndex % 2 == 0 && columnIndex % 2 == 0)) {
+          if(cell!='Empty') return acc+1;
+        }
+        return acc;
+      },0);
+    },0);
+    if (invalidPlacementCount > 0) return {error:'Invalid pieces placement'};
+    if(board[0].filter(cell=>cell==='White').length>0 || board[9].filter(cell=>cell==='Black').length>0) return {error:'Some pieces should be king'};
+
+    // If no error is found, notify observers that we have a new game state
     this.gameStateSubject.next({
       board: board,
       turn: turn,
     });
+    //And return null
     return null;
   }
 
