@@ -2,7 +2,7 @@
 <table>
   <tr *ngFor="let row of board;let iRow = index;">
     <td *ngFor="let cell of row;let iColumn = index;">
-      <button class="tableButton" (click)="valueChange(iRow,iColumn)" [disabled]="(iRow%2==0 && iColumn%2==0)||(iRow%2==1 && iColumn%2==1)">{{cellToString(cell)}}</button>
+        <button class="tableButton" (contextmenu)="onRightClick()" (auxclick)="copyCoordinate(iRow,iColumn);" (click)="valueChange(iRow,iColumn)" [disabled]="(iRow%2==0 && iColumn%2==0)||(iRow%2==1 && iColumn%2==1)">{{cellToString(cell)}}</button>
     </td>
     <td *ngIf="iRow==0" rowspan="10" style="padding-left: 50px; text-align: center">
       <h2>Generated string</h2>

@@ -7,7 +7,7 @@ import {Board, Cell} from "../checkers.data";
   styleUrls: ['./string-board-generator.component.scss']
 })
 export class StringBoardGeneratorComponent implements OnInit {
-  static readonly CELLS_TYPES : Cell[] = ["Empty", "Black", "White","BlackKing", "WhiteKing"];
+  readonly CELLS_TYPES : Cell[] = ["Empty", "Black", "White","BlackKing", "WhiteKing"];
   public board : Board;
   constructor() {
     this.board = new Array(10).map(() => new Array(10).fill('Empty')) as Board;
@@ -48,7 +48,7 @@ export class StringBoardGeneratorComponent implements OnInit {
   valueChange(iRow:  number, iColumn: number) {
     const cell = this.board[iRow][iColumn];
     if(iRow%2==1 && iColumn%2==0 || iRow%2==0 && iColumn%2==1) {
-      this.board[iRow][iColumn] = StringBoardGeneratorComponent.CELLS_TYPES[(StringBoardGeneratorComponent.CELLS_TYPES.indexOf(cell) + 1) % StringBoardGeneratorComponent.CELLS_TYPES.length];
+      this.board[iRow][iColumn] = this.CELLS_TYPES[(this.CELLS_TYPES.indexOf(cell) + 1) % this.CELLS_TYPES.length];
     }
   }
 
@@ -79,5 +79,13 @@ export class StringBoardGeneratorComponent implements OnInit {
       ['Empty',"Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty"],
       ['Empty',"Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty","Empty"],
     ]
+  }
+
+  copyCoordinate(iRow: number, iColumn: number) {
+    navigator.clipboard.writeText(`[${iRow},${iColumn}],`);
+  }
+
+  onRightClick() {
+    return false;
   }
 }
