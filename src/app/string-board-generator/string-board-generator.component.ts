@@ -35,11 +35,11 @@ export class StringBoardGeneratorComponent implements OnInit {
       case 'Black':
         return 'B';
       case 'BlackKing':
-        return 'BK';
+        return 'N';
       case 'White':
         return 'W';
       case 'WhiteKing':
-        return 'WK';
+        return 'X';
       default:
         return '?';
     }
