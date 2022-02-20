@@ -20,6 +20,26 @@ describe('CheckersService', () => {
    */
   describe('Test initialize() Methode', () => {
     describe('Errors', () => {
+      describe('Must contain at least one piece',()=>{
+        it('should return Must contain at least one piece when board is fully empty',()=>{
+          const board = getBoardFromString(`
+                                        ··········
+                                        ··········
+                                        ··········
+                                        ··········
+                                        ··········
+                                        ··········
+                                        ··········
+                                        ··········
+                                        ··········
+                                        ··········`);
+          const init = service.initialize(<Board>board, 'White');
+          expect(init).toEqual({error: 'Must contain at least one piece'});
+          expect(service.board).toEqual(getInitialGameState().board);
+          expect(service.turn).toEqual(getInitialGameState().turn);
+        });
+      });
+
       describe('Too many pieces', () => {
         it('should return to many pieces error with 21 black regular pieces', () => {
           const board = getBoardFromString(`
