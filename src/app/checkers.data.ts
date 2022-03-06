@@ -22,7 +22,15 @@ export type Board_RO = readonly [Row_RO, Row_RO, Row_RO, Row_RO, Row_RO, Row_RO,
 //One coordinate of the board
 export type TileCoords = readonly [x: number, y: number];
 //Coordinates List
-export type TileCoordsList = readonly TileCoords[];
+export type PossibleMove = {
+  from: TileCoords,
+  to: TileCoords,
+  paths: TileCoords[],
+  mandatory: boolean,
+  taken: TileCoords[],
+}
+
+export type PossibleMoves = Set<PossibleMove>;
 
 //The game state
 export interface GameState {
@@ -33,7 +41,7 @@ export interface GameState {
 }
 
 export type PlayReturns = null | { error: 'out of range' | 'no piece' | 'not your turn' | 'can not move there' };
-export type WhereCanPlayReturns = TileCoordsList | { error: 'out of range' | 'no piece' };
+export type WhereCanPlayReturns = PossibleMoves | { error: 'out of range' | 'no piece' };
 export type InitializeReturns = null | { error: 'Too many pieces' | 'Invalid pieces placement' | 'Some pieces should be king' | 'Must contain at least one piece'};
 
 //The game state for MVP/MVC

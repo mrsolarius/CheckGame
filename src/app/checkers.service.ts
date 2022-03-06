@@ -60,13 +60,16 @@ export class CheckersService implements GameStateInterface{
   /**
    * This function will return the list of possible moves for the piece corresponding
    * to the given coordinates (note:the list could be empty)
+   * Note : At the checkers game, you must eat pieces if you can.
+   * If you can eat multiple pieces, then you must choose the position that will give you the most points so this function will return one positions.
+   * If you have multiple positions that give the same number of points, then this function will return array of positions.
    * If they can't return the list it will return one of the following errors:
    * - {error:'out of range'} if coords aren't positive integers or are out of the board
    * - {error:'no piece'} if there is no piece on the given from coordinates
    * @param from
    */
   whereCanPlay(from: TileCoords): WhereCanPlayReturns {
-    return [];
+    return new Set([]);
   }
 
   /**
